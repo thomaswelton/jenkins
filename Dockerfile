@@ -23,4 +23,11 @@ ENV DOCKER_VERSION 17.05.0-ce
 
 RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz && tar --strip-components=1 -xvzf docker-${DOCKER_VERSION}.tgz -C /usr/local/bin
 
+ENV PUID 1000
+ENV PGID 1000
+
+RUN usermod --uid ${PUID} jenkins
+RUN groupmod --gid ${PGID} jenkins
+RUN chown -R jenkins:jenkins "$JENKINS_HOME"
+
 USER jenkins
